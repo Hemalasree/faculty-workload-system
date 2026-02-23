@@ -1,0 +1,15 @@
+# Node
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+
+# Vite
+dist/
+
+# OS
+.DS_Store
+Thumbs.db

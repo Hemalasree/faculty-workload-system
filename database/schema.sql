@@ -1,0 +1,47 @@
+CREATE DATABASE faculty_workload_db;
+USE faculty_workload_db;
+
+-- USERS (Admin + Faculty)
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('ADMIN','FACULTY') NOT NULL,
+  department VARCHAR(100),
+  designation VARCHAR(100),
+  max_hours INT DEFAULT 16,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- SUBJECTS
+CREATE TABLE subjects (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  subject_code VARCHAR(20) UNIQUE NOT NULL,
+  subject_name VARCHAR(150) NOT NULL,
+  credits INT NOT NULL,
+  semester INT NOT NULL,
+  department VARCHAR(100) NOT NULL
+);
+
+-- CLASSES
+CREATE TABLE classes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  class_name VARCHAR(50) NOT NULL,
+  semester INT NOT NULL,
+  department VARCHAR(100) NOT NULL
+);
+
+-- WORKLOAD ALLOCATION
+CREATE TABLE workload (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  faculty_id INT NOT NULL,
+  subject_id INT NOT NULL,
+  class_id INT NOT NULL,
+  hours INT NOT NULL,
+  duty_type ENUM('TEACHING','NON_TEACHING') DEFAULT 'TEACHING',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (faculty_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
+  FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+);
