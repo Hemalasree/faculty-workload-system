@@ -4,9 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#0b0f19",
-        card: "#111827",
-        border: "#1f2937"
+        primary: "#3B82F6",
+        secondary: "#6366F1",
+        bg: "#0F172A",
+        card: "#1E293B"
       }
     }
   },

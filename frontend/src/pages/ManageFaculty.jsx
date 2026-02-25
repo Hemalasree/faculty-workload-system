@@ -23,16 +23,13 @@ export default function ManageFaculty() {
   };
 
   const addFaculty = async () => {
-    await api.post("/faculty", form);
-    setForm({
-      name: "",
-      email: "",
-      password: "",
-      department: "",
-      designation: "",
-      max_hours: 18,
-    });
-    loadFaculty();
+    try {
+      await api.post("/auth/register-faculty", form);
+      await loadFaculty();
+      alert("Faculty Added Successfully");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error adding faculty");
+    }
   };
 
   return (

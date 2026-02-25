@@ -45,3 +45,7 @@ CREATE TABLE workload (
   FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
   FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
 );
+
+
+INSERT INTO classes(class_name, semester, department)
+VALUES ('CSE-A', 6, 'CSE');

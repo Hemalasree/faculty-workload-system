@@ -6,15 +6,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const facultyRoutes = require("./routes/faculty.routes");
-const subjectRoutes = require("./routes/subject.routes");
-
-app.use("/api/faculty", facultyRoutes);
-app.use("/api/subjects", subjectRoutes);
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/faculty", require("./routes/facultyRoutes"));
+app.use("/api/subjects", require("./routes/subjectRoutes"));
 app.use("/api/workload", require("./routes/workloadRoutes"));
 
-app.get("/", (req, res) => res.send("Faculty Workload Backend Running"));
+app.get("/", (req, res) => {
+  res.send("Faculty Workload Backend Running")
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port", process.env.PORT);

@@ -6,10 +6,9 @@ export default function ManageSubjects() {
   const [subjects, setSubjects] = useState([]);
   const [form, setForm] = useState({
     subject_name: "",
+    subject_code: "",
     semester: "",
-    class_name: "",
-    credits: 3,
-    hours_per_week: 3,
+    department: ""
   });
 
   useEffect(() => {
@@ -22,15 +21,13 @@ export default function ManageSubjects() {
   };
 
   const addSubject = async () => {
-    await api.post("/subjects", form);
-    setForm({
-      subject_name: "",
-      semester: "",
-      class_name: "",
-      credits: 3,
-      hours_per_week: 3,
-    });
-    loadSubjects();
+    try {
+      await api.post("/subjects", form);
+      await loadSubjects();
+      alert("Subject Added Successfully");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error adding subject");
+    }
   };
 
   return (
@@ -42,30 +39,27 @@ export default function ManageSubjects() {
 
           <input
             placeholder="Subject Name"
-            className="w-full mb-3 p-2 rounded bg-black/30 border border-white/10"
             value={form.subject_name}
-            onChange={(e) =>
-              setForm({ ...form, subject_name: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, subject_name: e.target.value })}
           />
 
           <input
-            placeholder="Semester"
+            placeholder="Subject Code"
+            value={form.subject_code}
+            onChange={(e) => setForm({ ...form, subject_code: e.target.value })}
+          />
+
+          <input
             type="number"
-            className="w-full mb-3 p-2 rounded bg-black/30 border border-white/10"
+            placeholder="Semester"
             value={form.semester}
-            onChange={(e) =>
-              setForm({ ...form, semester: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, semester: e.target.value })}
           />
 
           <input
-            placeholder="Class Name"
-            className="w-full mb-3 p-2 rounded bg-black/30 border border-white/10"
-            value={form.class_name}
-            onChange={(e) =>
-              setForm({ ...form, class_name: e.target.value })
-            }
+            placeholder="Department"
+            value={form.department}
+            onChange={(e) => setForm({ ...form, department: e.target.value })}
           />
 
           <button

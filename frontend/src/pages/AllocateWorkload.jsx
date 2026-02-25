@@ -42,7 +42,8 @@ export default function AllocateWorkload() {
       const res = await api.post("/workload/allocate", {
         faculty_id,
         subject_id,
-        allocated_hours: hours,
+        class_id: 1,
+        hours: Number(hours),
         duty_type,
       });
 

@@ -4,12 +4,14 @@ exports.allocateWorkload = async (req, res) => {
   try {
     const { faculty_id, subject_id, class_id, hours, duty_type } = req.body;
 
-    // get faculty max_hours
-    const [[faculty]] = await pool.query("SELECT max_hours FROM users WHERE id=?", [faculty_id]);
+    const [[faculty]] = await pool.query(
+      "SELECT max_hours FROM users WHERE id=? AND role='FACULTY'",
+      [faculty_id]
+    );
 
-    if (!faculty) return res.status(404).json({ message: "Faculty not found" });
+    if (!faculty)
+      return res.status(404).json({ message: "Faculty not found" });
 
-    // current workload sum
     const [[sumRow]] = await pool.query(
       "SELECT COALESCE(SUM(hours),0) as total FROM workload WHERE faculty_id=?",
       [faculty_id]
@@ -24,9 +26,16 @@ exports.allocateWorkload = async (req, res) => {
     }
 
     await pool.query(
-      `INSERT INTO workload(faculty_id, subject_id, class_id, hours, duty_type)
+      `INSERT INTO workload
+       (faculty_id,subject_id,class_id,hours,duty_type)
        VALUES(?,?,?,?,?)`,
-      [faculty_id, subject_id, class_id, hours, duty_type || "TEACHING"]
+      [
+        faculty_id,
+        subject_id,
+        class_id,
+        Number(hours),
+        duty_type || "TEACHING"
+      ]
     );
 
     res.json({ message: "Workload allocated successfully", newTotal });
@@ -40,7 +49,12 @@ exports.getFacultyWorkload = async (req, res) => {
     const facultyId = req.user.id;
 
     const [rows] = await pool.query(
-      `SELECT w.id, s.subject_name, s.subject_code, c.class_name, w.hours, w.duty_type
+      `SELECT w.id,
+              s.subject_name,
+              s.subject_code,
+              c.class_name,
+              w.hours,
+              w.duty_type
        FROM workload w
        JOIN subjects s ON w.subject_id = s.id
        JOIN classes c ON w.class_id = c.id
@@ -57,7 +71,10 @@ exports.getFacultyWorkload = async (req, res) => {
 exports.getDepartmentSummary = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      `SELECT u.name, u.department, COALESCE(SUM(w.hours),0) as total_hours, u.max_hours
+      `SELECT u.name,
+              u.department,
+              COALESCE(SUM(w.hours),0) as total_hours,
+              u.max_hours
        FROM users u
        LEFT JOIN workload w ON u.id = w.faculty_id
        WHERE u.role='FACULTY'

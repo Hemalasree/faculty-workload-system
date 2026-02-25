@@ -5,6 +5,8 @@ import ManageSubjects from "./pages/ManageSubjects";
 import AllocateWorkload from "./pages/AllocateWorkload";
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
+import Landing from "./pages/Landing";
+import FacultyDashboard from "./pages/FacultyDashboard";
 
 export default function App() {
   return (
@@ -17,6 +19,9 @@ export default function App() {
         <Route path="/admin/subjects" element={<ManageSubjects />} />
         <Route path="/admin/allocate" element={<AllocateWorkload />} />
         <Route path="/admin/reports" element={<Reports />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/faculty" element={<FacultyDashboard />} />
       </Routes>
     </BrowserRouter>
   );
