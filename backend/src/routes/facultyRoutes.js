@@ -1,20 +1,11 @@
 const express = require("express");
-const router = express.Router();
-const pool = require("../config/db");
+const router  = express.Router();
 const { auth, adminOnly } = require("../middleware/auth");
+const ctrl = require("../controllers/facultyController");
 
-router.get("/", auth, adminOnly, async (req, res) => {
-  try {
-    const [rows] = await pool.query(
-      `SELECT id,name,email,department,designation,max_hours
-       FROM users
-       WHERE role='FACULTY'
-       ORDER BY name`
-    );
-    res.json(rows);
-  } catch (err) {
-    res.status(500).json({ message: "Fetch error", error: err.message });
-  }
-});
+router.get("/",       auth, adminOnly, ctrl.getAllFaculty);
+router.get("/:id",    auth, adminOnly, ctrl.getFacultyById);
+router.put("/:id",    auth, adminOnly, ctrl.updateFaculty);
+router.delete("/:id", auth, adminOnly, ctrl.deleteFaculty);
 
 module.exports = router;
