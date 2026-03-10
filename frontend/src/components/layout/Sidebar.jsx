@@ -2,8 +2,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {
   LayoutDashboard, Users, BookOpen, Building2, ClipboardList,
-  BarChart3, CalendarDays, FileText, Bell, Settings, LogOut,
-  User, Briefcase, Clock, CalendarCheck, MessageSquare, ChevronRight
+  BarChart3, CalendarDays, FileText, Bell,
+  User, Briefcase, Clock, CalendarCheck, MessageSquare, LogOut
 } from "lucide-react";
 import React from "react";
 
@@ -17,19 +17,17 @@ const adminNav = [
   { to: "/admin/requests",     label: "Requests",       icon: MessageSquare },
   { to: "/admin/notifications",label: "Notifications",  icon: Bell },
   { to: "/admin/reports",      label: "Reports",        icon: FileText },
-  { to: "/admin/settings",     label: "Settings",       icon: Settings },
 ];
 
 const facultyNav = [
-  { to: "/faculty",              label: "Dashboard",   icon: LayoutDashboard },
-  { to: "/faculty/profile",      label: "Profile",     icon: User },
-  { to: "/faculty/subjects",     label: "Subjects",    icon: BookOpen },
-  { to: "/faculty/workload",     label: "Workload",    icon: BarChart3 },
-  { to: "/faculty/leave",        label: "Leave",       icon: CalendarCheck },
-  { to: "/faculty/requests",     label: "Requests",    icon: MessageSquare },
+  { to: "/faculty",              label: "Dashboard",    icon: LayoutDashboard },
+  { to: "/faculty/profile",      label: "Profile",      icon: User },
+  { to: "/faculty/subjects",     label: "Subjects",     icon: BookOpen },
+  { to: "/faculty/workload",     label: "Workload",     icon: BarChart3 },
+  { to: "/faculty/leave",        label: "Leave",        icon: CalendarCheck },
+  { to: "/faculty/requests",     label: "Requests",     icon: MessageSquare },
   { to: "/faculty/notifications",label: "Notifications",icon: Bell },
-  { to: "/faculty/reports",      label: "Reports",     icon: FileText },
-  { to: "/faculty/settings",     label: "Settings",    icon: Settings },
+  { to: "/faculty/reports",      label: "Reports",      icon: FileText },
 ];
 
 export default function Sidebar() {

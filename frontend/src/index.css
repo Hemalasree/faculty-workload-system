@@ -4,71 +4,53 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { @apply scroll-smooth; }
   body {
-    background-color: #F0F4FF;
-    color: #374151;
+    @apply bg-bgLight text-textMain dark:bg-bgDark dark:text-gray-200;
     font-family: 'DM Sans', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-  .dark body {
-    background-color: #0F172A;
-    color: #E2E8F0;
-  }
+  * { @apply transition-colors duration-200; }
 }
 
 @layer components {
   /* Cards */
   .card {
-    @apply bg-white dark:bg-slate-800
-           border border-gray-200 dark:border-slate-700
-           rounded-2xl p-6
-           shadow-sm hover:shadow-md
-           transition-shadow duration-200;
+    @apply bg-cardLight dark:bg-cardDark
+           border border-border dark:border-borderDark
+           rounded-2xl p-6 shadow-card
+           hover:shadow-cardHov transition-shadow;
   }
-  .card-sm {
-    @apply bg-white dark:bg-slate-800
-           border border-gray-200 dark:border-slate-700
-           rounded-2xl p-4
-           shadow-sm hover:shadow-md
-           transition-shadow duration-200;
-  }
+  .card-sm { @apply card p-4; }
 
   /* Form elements */
   .input {
     @apply w-full px-4 py-2.5 rounded-xl
-           border border-gray-300 dark:border-slate-600
-           bg-white dark:bg-slate-700
-           text-gray-700 dark:text-gray-100
-           placeholder-gray-400 dark:placeholder-gray-500
-           focus:outline-none focus:ring-2 focus:ring-blue-400
-           focus:border-blue-400 text-sm;
+           border border-border dark:border-borderDark
+           bg-white dark:bg-gray-800
+           text-textMain dark:text-gray-100
+           placeholder-textMuted dark:placeholder-gray-500
+           focus:outline-none focus:ring-2 focus:ring-primary/40
+           focus:border-primary text-sm;
   }
   .select {
-    @apply w-full px-4 py-2.5 rounded-xl
-           border border-gray-300 dark:border-slate-600
-           bg-white dark:bg-slate-700
-           text-gray-700 dark:text-gray-100
-           focus:outline-none focus:ring-2 focus:ring-blue-400
-           focus:border-blue-400 text-sm cursor-pointer;
+    @apply input appearance-none cursor-pointer;
   }
   .label {
-    @apply block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1.5;
+    @apply block text-sm font-medium text-textMuted dark:text-gray-400 mb-1.5;
   }
-  .form-group {
-    @apply space-y-1.5;
-  }
+  .form-group { @apply space-y-1.5; }
 
   /* Buttons */
   .btn-primary {
-    @apply px-5 py-2.5 bg-blue-500 text-white rounded-xl font-medium text-sm
-           hover:bg-blue-600 active:scale-95 transition-all duration-150
+    @apply px-5 py-2.5 bg-primary text-white rounded-xl font-medium text-sm
+           hover:bg-primaryHov active:scale-95 transition-all duration-150
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-secondary {
-    @apply px-5 py-2.5 border border-gray-300 dark:border-slate-600
-           text-gray-700 dark:text-gray-300 rounded-xl font-medium text-sm
-           hover:bg-gray-50 dark:hover:bg-slate-700
+    @apply px-5 py-2.5 border border-border dark:border-borderDark
+           text-textMain dark:text-gray-300 rounded-xl font-medium text-sm
+           hover:bg-gray-50 dark:hover:bg-gray-800
            active:scale-95 transition-all duration-150;
   }
   .btn-danger {
@@ -76,83 +58,41 @@
            hover:bg-red-600 active:scale-95 transition-all;
   }
   .btn-ghost {
-    @apply px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 rounded-lg
-           hover:bg-gray-100 dark:hover:bg-slate-700 transition-all;
+    @apply px-3 py-1.5 text-sm text-textMuted dark:text-gray-400 rounded-lg
+           hover:bg-gray-100 dark:hover:bg-gray-700 transition-all;
   }
 
   /* Badges */
-  .badge-green {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-           bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
-  }
-  .badge-yellow {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-           bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300;
-  }
-  .badge-red {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-           bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300;
-  }
-  .badge-blue {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-           bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300;
-  }
-  .badge-gray {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-           bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-gray-300;
-  }
+  .badge-green  { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-statusGreen text-statusGreenText; }
+  .badge-yellow { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-statusYellow text-statusYellowText; }
+  .badge-red    { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-statusRed text-statusRedText; }
+  .badge-blue   { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300; }
+  .badge-gray   { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300; }
 
   /* Table */
-  .table-wrapper {
-    @apply overflow-x-auto rounded-xl border border-gray-200 dark:border-slate-700;
-  }
-  .table {
-    @apply w-full text-sm;
-  }
-  .table thead tr {
-    @apply bg-gray-50 dark:bg-slate-800;
-  }
-  .table th {
-    @apply text-left px-4 py-3 text-xs font-semibold
-           text-gray-500 dark:text-gray-400 uppercase tracking-wide;
-  }
-  .table td {
-    @apply px-4 py-3 text-gray-700 dark:text-gray-300
-           border-t border-gray-100 dark:border-slate-700;
-  }
-  .table tbody tr {
-    @apply hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors;
-  }
+  .table-wrapper { @apply overflow-x-auto rounded-xl border border-border dark:border-borderDark; }
+  .table { @apply w-full text-sm; }
+  .table thead tr { @apply bg-gray-50 dark:bg-gray-800/50; }
+  .table th { @apply text-left px-4 py-3 text-xs font-semibold text-textMuted dark:text-gray-400 uppercase tracking-wide; }
+  .table td { @apply px-4 py-3 text-textMain dark:text-gray-300 border-t border-border dark:border-borderDark; }
+  .table tbody tr { @apply hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors; }
 
-  /* Page titles */
-  .page-title {
-    @apply text-2xl font-semibold text-gray-800 dark:text-white mb-1;
-  }
-  .page-sub {
-    @apply text-sm text-gray-500 dark:text-gray-400;
-  }
+  /* Page title */
+  .page-title { @apply text-2xl font-semibold text-textMain dark:text-white mb-1; }
+  .page-sub   { @apply text-sm text-textMuted dark:text-gray-400; }
 
   /* Sidebar nav link */
   .nav-link {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
-           text-gray-500 dark:text-gray-400
-           hover:bg-white dark:hover:bg-white/5
-           hover:text-gray-800 dark:hover:text-white
+           text-textMuted dark:text-gray-400
+           hover:bg-white/60 dark:hover:bg-white/5 hover:text-textMain dark:hover:text-white
            transition-all duration-150;
   }
   .nav-link.active {
-    @apply bg-white dark:bg-white/10 text-blue-500 dark:text-blue-400 shadow-sm;
+    @apply bg-white dark:bg-white/10 text-primary dark:text-primary shadow-sm;
   }
 
   /* Alert messages */
-  .alert-success {
-    @apply p-3 rounded-xl bg-green-50 dark:bg-green-900/20
-           border border-green-200 dark:border-green-800
-           text-green-700 dark:text-green-300 text-sm;
-  }
-  .alert-error {
-    @apply p-3 rounded-xl bg-red-50 dark:bg-red-900/20
-           border border-red-200 dark:border-red-800
-           text-red-700 dark:text-red-300 text-sm;
-  }
+  .alert-success { @apply p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm; }
+  .alert-error   { @apply p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm; }
 }
