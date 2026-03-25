@@ -19,11 +19,13 @@ export default function ManageFaculty() {
   const [filter, setFilter]       = useState("");
   const [loading, setLoading]     = useState(false);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { 
+    load(); // fetch faculty list from API
+  }, []); // [] means run only once when page loads
 
   const load = async () => {
     const [fr, dr] = await Promise.all([api.get("/faculty"), api.get("/departments")]);
-    setFaculty(fr.data.data || []);
+    setFaculty(fr.data.data || []); // update state → triggers re-render
     setDepts(dr.data.data || []);
   };
 

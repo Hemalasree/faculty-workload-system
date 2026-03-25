@@ -7,7 +7,8 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password)
       return res.status(400).json({ success: false, message: "Email and password required" });
-
+    
+    // 1. Find user in database
     const [rows] = await pool.query(
       `SELECT u.*, d.name as department_name 
        FROM users u 
@@ -19,15 +20,17 @@ exports.login = async (req, res) => {
     if (rows.length === 0)
       return res.status(400).json({ success: false, message: "User not found" });
 
+    // 2. Compare password with stored hash
     const user = rows[0];
     const valid = await bcrypt.compare(password, user.password);
     if (!valid)
       return res.status(400).json({ success: false, message: "Invalid password" });
 
+    // 3. Create JWT token
     const token = jwt.sign(
       { id: user.id, role: user.role, name: user.name, department_id: user.department_id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      process.env.JWT_SECRET, // secret key from .env
+      { expiresIn: "1d" }     // expires in 1 day
     );
 
     res.json({
