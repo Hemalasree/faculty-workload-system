@@ -1,9 +1,3 @@
--- ============================================================
--- Faculty Workload Management System - Complete Schema
--- ============================================================
-
-CREATE DATABASE IF NOT EXISTS faculty_workload_db;
-USE faculty_workload_db;
 
 -- Departments
 CREATE TABLE departments (
